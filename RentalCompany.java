@@ -32,9 +32,11 @@ public class RentalCompany {
 			break;
 		case 1:
 			System.out.println("Enter your username:");
-			username = scan.next();
+			username = scan.nextLine();
+			Account.checkUsername(username);
 			System.out.println("Enter your password:");
-			password = scan.next();
+			password = scan.nextLine();
+			Account.checkPassword(password);
 			break;
 		case 2:
 			System.out.println("Let's get you signed up");
