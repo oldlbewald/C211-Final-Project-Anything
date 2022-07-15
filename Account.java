@@ -19,7 +19,27 @@ public class Account {
 		this.username = newusername;
 		this.password = newpassword;
 	}
+	
+	public static void checkUsername(String username) {
+		if (username != null && !username.isEmpty() && !username.isBlank()) {
+			System.out.println("Username you entered was " + username);
+		} else {
+			System.out.println("The username you entered was empty or not valid. Type it again:");
+			username = scan.nextLine();
+			checkUsername(username);
+		}
+	}
 
+	public static void checkPassword(String password) {
+		if (password != null && !password.isEmpty() && !password.isBlank()) {
+			System.out.println("The password you entered was " + password);
+		} else {
+			System.out.println("The password you entered was empty or not valid. Type it again:");
+			password = scan.nextLine();
+			checkPassword(password);
+		}
+	}
+	
 	public static ArrayList<Account> readAccountsFromFile(String fileName) throws FileNotFoundException {
 		File file = new File(fileName);
 		Scanner s = new Scanner(file);
