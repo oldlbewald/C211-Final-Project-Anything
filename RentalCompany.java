@@ -1,4 +1,3 @@
-
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -6,6 +5,7 @@ public class RentalCompany {
 
 	static Scanner scan = new Scanner(System.in);
 	static boolean quit = false;
+	static boolean start = false;
 
 	// Interface function for main menu
 	public static void printMainMenuOne() {
@@ -25,10 +25,12 @@ public class RentalCompany {
 		String newpassword;
 
 		switch (choice) {
+
 		// Quit application case
 		case 0:
 			quit = true;
 			break;
+
 		// Login case
 		case 1:
 			System.out.println("Enter your username:");
@@ -39,8 +41,19 @@ public class RentalCompany {
 			password = scan.nextLine();
 			Account.checkPassword(password);
 
-			Account.verifyLogin(username, password, "Accounts.txt");
+			// if login is successful display next actions to choose from
+			if (A.verifyLogin(username, password, "Accounts.txt") != false) {
+				System.out.println("You have successfully logged in");
+				quit = true;
+				start = false;
+
+				// printMenu();
+
+			} else {
+				// System.out.println("Log in failed...");
+			}
 			break;
+
 		// Create new account case
 		case 2:
 			System.out.println("Let's get you signed up");
@@ -75,7 +88,7 @@ public class RentalCompany {
 	public static void performActiontwo(Vehicles aList, int choice, Vehicles[] vehicles) {
 		switch (choice) {
 		case 0:
-			quit = true;
+			start = true;
 			break;
 		case 1:
 			System.out.println("Here is the selection of vehicles available:");
@@ -117,8 +130,15 @@ public class RentalCompany {
 			choice = scan.nextInt();
 			performAction(newaccount, accounts, choice);
 		}
-		System.out.println("Thanks for using Express Rental Service, have a great day!");
+
+		while (!start) {
+			printMenu();
+			System.out.println("Enter your choice");
+			choice = scan.nextInt();
+			performActiontwo(myList, choice, vehicles);
+		}
 		scan.close();
+		System.out.println("Thanks for using Express Rental Service, have a great day!");
 	}
 
 }
