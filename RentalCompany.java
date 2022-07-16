@@ -1,5 +1,5 @@
+
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RentalCompany {
@@ -7,37 +7,41 @@ public class RentalCompany {
 	static Scanner scan = new Scanner(System.in);
 	static boolean quit = false;
 
-	// Interface function
+	// Interface function for main menu
 	public static void printMainMenuOne() {
 		System.out.println("Possible actions:");
 		System.out.println("0 - Quit the program");
 		System.out.println("1 - log in");
 		System.out.println("2 - Create an account");
-
-		// test case for account file reader
-		System.out.println("3 - print accounts from test");
 	}
 
 	public static void performAction(newAcount NA, Account A, int choice) throws FileNotFoundException {
+		// Strings used for logging in
 		String username;
 		String password;
 
-		// String used when creating a new account
+		// Strings used when creating a new account
 		String newusername;
 		String newpassword;
 
 		switch (choice) {
+		// Quit application case
 		case 0:
 			quit = true;
 			break;
+		// Login case
 		case 1:
 			System.out.println("Enter your username:");
 			username = scan.nextLine();
 			Account.checkUsername(username);
+
 			System.out.println("Enter your password:");
 			password = scan.nextLine();
 			Account.checkPassword(password);
+
+			Account.verifyLogin(username, password, "Accounts.txt");
 			break;
+		// Create new account case
 		case 2:
 			System.out.println("Let's get you signed up");
 			System.out.println("Enter the username you want to use for this account:");
@@ -50,14 +54,7 @@ public class RentalCompany {
 
 			NA.writeFile("Accounts.txt", newusername, newpassword);
 			break;
-		case 3:
-			System.out.println("Reading from the file: Accounts.txt");
-			ArrayList<Account> AccountsFromFile = new ArrayList<Account>();
-			AccountsFromFile = Account.readAccountsFromFile("Accounts.txt");
-			System.out.println(AccountsFromFile);
-			System.out.println("The first account in the list is  " + AccountsFromFile.get(0));
 
-			break;
 		default:
 			System.out.println("Unknown option, try again.");
 
@@ -111,7 +108,6 @@ public class RentalCompany {
 		Scanner scan = new Scanner(System.in);
 
 		Account accounts = new Account();
-		// Account [] account = {};
 
 		newAcount newaccount = new newAcount();
 
@@ -122,6 +118,7 @@ public class RentalCompany {
 			performAction(newaccount, accounts, choice);
 		}
 		System.out.println("Thanks for using Express Rental Service, have a great day!");
+		scan.close();
 	}
 
 }
