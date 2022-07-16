@@ -22,7 +22,6 @@ public class Account {
 	// Method to check if the user-name entered is blank, null or has spaces
 	public static void checkUsername(String username) {
 		if (username != null && !username.isEmpty() && !username.isBlank()) {
-			System.out.println("Username you entered was " + username);
 		} else {
 			System.out.println("The username you entered was empty or not valid. Type it again:");
 			username = scan.nextLine();
@@ -33,7 +32,6 @@ public class Account {
 	// Method to check if the password entered is blank, null or has spaces
 	public static void checkPassword(String password) {
 		if (password != null && !password.isEmpty() && !password.isBlank()) {
-			System.out.println("The password you entered was " + password);
 		} else {
 			System.out.println("The password you entered was empty or not valid. Type it again:");
 			password = scan.nextLine();
@@ -43,7 +41,23 @@ public class Account {
 
 	// Method to check if the user-name & password exist inside of the Accounts.txt
 	// file
-	public static void verifyLogin(String username, String password, String fileName) {
+	/*
+	 * public static void verifyLogin(String username, String password, String
+	 * fileName) { boolean found = false; String searchUsername = ""; String
+	 * searchPassword = "";
+	 * 
+	 * try { Scanner x = new Scanner(new File(fileName)); x.useDelimiter("[ \n]");
+	 * 
+	 * while (x.hasNext() && !found) { searchUsername = x.next(); searchPassword =
+	 * x.next();
+	 * 
+	 * if (searchUsername.trim().equals(username.trim()) &&
+	 * searchPassword.trim().equals(password.trim())) { found = true; } } x.close();
+	 * System.out.println(found); } catch (Exception e) {
+	 * System.out.println("Error"); } }
+	 */
+
+	public boolean verifyLogin(String username, String password, String fileName) {
 		boolean found = false;
 		String searchUsername = "";
 		String searchPassword = "";
@@ -57,14 +71,15 @@ public class Account {
 				searchPassword = x.next();
 
 				if (searchUsername.trim().equals(username.trim()) && searchPassword.trim().equals(password.trim())) {
-					found = true;
+					return true;
 				}
 			}
 			x.close();
-			System.out.println(found);
+			// return false;
 		} catch (Exception e) {
-			System.out.println("Error");
+			System.out.println("Username or password was inncorect.");
 		}
+		return found;
 	}
 
 }
