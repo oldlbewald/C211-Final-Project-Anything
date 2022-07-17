@@ -1,5 +1,5 @@
-# C211-Final-Project-Anything
-C211-Final Project for group Anything
+# C211-Final-Project-Vehicle Rental Application
+C211-Final Project for group Vehicle Rental Application
 
 The goal of this project was to create an application for a car rental service.
 A user can create an account, add a vehicle, and also remove the vehicle from
