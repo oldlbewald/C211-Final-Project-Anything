@@ -67,7 +67,7 @@ public class RentalCompany {
 				System.out.println("Username was either blank or had spaces. Enter it again:");
 				newusername = scan.nextLine();
 			}
-			System.out.println("your username will be " + newusername);
+			System.out.println("Your username will be " + newusername);
 
 			// newAcount.checkUsernameDupe("Accounts.txt", newusername);
 
@@ -77,7 +77,7 @@ public class RentalCompany {
 				System.out.println("Password was either blank or had spaces. Enter it again:");
 				newpassword = scan.nextLine();
 			}
-			System.out.println("your username will be " + newpassword);
+			System.out.println("Your password will be " + newpassword);
 
 			NA.writeFile("Accounts.txt", newusername, newpassword);
 
