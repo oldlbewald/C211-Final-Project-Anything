@@ -5,7 +5,7 @@ public class RentalCompany {
 
 	static Scanner scan = new Scanner(System.in);
 	static boolean quit = false;
-	static boolean start = false;
+	static boolean start = true;
 
 	// Interface function for main menu
 	public static void printMainMenuOne() {
@@ -35,11 +35,17 @@ public class RentalCompany {
 		case 1:
 			System.out.println("Enter your username:");
 			username = scan.nextLine();
-			Account.checkUsername(username);
+			while (username == null || username.isEmpty() || username.isBlank() || username.contains(" ")) {
+				System.out.println("Username was either blank or had spaces. Enter it again:");
+				username = scan.nextLine();
+			}
 
 			System.out.println("Enter your password:");
 			password = scan.nextLine();
-			Account.checkPassword(password);
+			while (password == null || password.isEmpty() || password.isBlank() || password.contains(" ")) {
+				System.out.println("Password was either blank or had spaces. Enter it again:");
+				password = scan.nextLine();
+			}
 
 			// if login is successful display next actions to choose from
 			if (A.verifyLogin(username, password, "Accounts.txt") != false) {
@@ -47,10 +53,8 @@ public class RentalCompany {
 				quit = true;
 				start = false;
 
-				// printMenu();
-
 			} else {
-				// System.out.println("Log in failed...");
+				System.out.println("Try Logging in again.");
 			}
 			break;
 
@@ -59,13 +63,24 @@ public class RentalCompany {
 			System.out.println("Let's get you signed up");
 			System.out.println("Enter the username you want to use for this account:");
 			newusername = scan.nextLine();
-			newAcount.checkUsername(newusername);
+			while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ")) {
+				System.out.println("Username was either blank or had spaces. Enter it again:");
+				newusername = scan.nextLine();
+			}
+			System.out.println("your username will be " + newusername);
+
+			// newAcount.checkUsernameDupe("Accounts.txt", newusername);
 
 			System.out.println("Enter the password you want to use for this account:");
 			newpassword = scan.nextLine();
-			newAcount.checkPassword(newpassword);
+			while (newpassword == null || newpassword.isEmpty() || newpassword.isBlank() || newpassword.contains(" ")) {
+				System.out.println("Password was either blank or had spaces. Enter it again:");
+				newpassword = scan.nextLine();
+			}
+			System.out.println("your username will be " + newpassword);
 
 			NA.writeFile("Accounts.txt", newusername, newpassword);
+
 			break;
 
 		default:
@@ -88,7 +103,7 @@ public class RentalCompany {
 	public static void performActiontwo(Vehicles aList, int choice, Vehicles[] vehicles) {
 		switch (choice) {
 		case 0:
-			start = true;
+			start = false;
 			break;
 		case 1:
 			System.out.println("Here is the selection of vehicles available:");
