@@ -80,7 +80,7 @@ public class RentalCompany {
 			System.out.println("Your password will be " + newpassword);
 
 			NA.writeFile("Accounts.txt", newusername, newpassword);
-
+			System.out.println("Your Account was successfully created. Try logging in now.");
 			break;
 
 		default:
