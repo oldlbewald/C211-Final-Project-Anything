@@ -103,7 +103,7 @@ public class RentalCompany {
 	public static void performActiontwo(Vehicles aList, int choice, Vehicles[] vehicles) {
 		switch (choice) {
 		case 0:
-			start = false;
+			start = true;
 			break;
 		case 1:
 			System.out.println("Here is the selection of vehicles available:");
