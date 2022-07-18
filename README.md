@@ -8,11 +8,7 @@ one is already added they will receive an error due to a one vehicle limit being
 
 Source files: 
 
-Accounts.txt:
-
-This is a text file where the users will be added to when they a created, this includes the users username and password they make.
+Accounts.txt - This is a text file where the users will be added to when they a created, this includes the users username and password they make.
 
 
-newAcount.java:
-
-Java file that creates a new users account with a username and password from users input. Also ensures all input is formated properly before inserted to Accounts.txt file.
+newAcount.java - Java file that creates a new users account with a username and password from users input. Also ensures all input is formated properly before inserted to Accounts.txt file.
