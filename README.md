@@ -6,12 +6,13 @@ car rental service. A user can create an account, add a vehicle, and also remove
 vehicle from their account but, if a user tries adding another vehicle to their account if
 one is already added they will receive an error due to a one vehicle limit being implemented.
 
-Source file: 
+Source files: 
 
-Accounts.txt -
+Accounts.txt:
+
 This is a text file where the users will be added to when they a created, this includes the users username and password they make.
 
 
-Source file: 
+newAcount.java:
 
-newAcount.java - Java file that creates a new users account with a username and password from users input. Also ensures all input is formated properly before inserted to Accounts.txt file.
+Java file that creates a new users account with a username and password from users input. Also ensures all input is formated properly before inserted to Accounts.txt file.
