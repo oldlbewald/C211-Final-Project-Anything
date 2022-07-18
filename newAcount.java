@@ -9,18 +9,21 @@ public class newAcount {
 	String newusername;
 	String newpassword;
 
+
 	static Scanner scan = new Scanner(System.in);
 
 	// Constructor
 	public newAcount() {
 		newusername = "";
 		newpassword = "";
+
 	}
 
 	// Constructor
 	public newAcount(String newusername, String newpassword) {
 		this.newusername = newusername;
 		this.newpassword = newpassword;
+
 	}
 
 	// Method to check if the new user-name entered is blank, null or has spaces
@@ -52,18 +55,18 @@ public class newAcount {
 		String searchUsername = "";
 
 		try {
-			Scanner x = new Scanner(new File(fileName));
-			x.useDelimiter("[ \n]");
-
-			while (x.hasNext() && !found) {
-				searchUsername = x.next();
-
-				if (searchUsername.trim().equals(newusername.trim())) {
-					found = true;
-					System.out.println(found);
-				}
-			}
-			x.close();
+                    try (Scanner x = new Scanner(new File(fileName))) {
+                        x.useDelimiter("[ \n]");
+                        
+                        while (x.hasNext() && !found) {
+                            searchUsername = x.next();
+                            
+                            if (searchUsername.trim().equals(newusername.trim())) {
+                                found = true;
+                                System.out.println(found);
+                            }
+                        }
+                    }
 			found = false;
 		} catch (Exception e) {
 			System.out.println("username already created");
@@ -95,7 +98,6 @@ public class newAcount {
 		}
 
 		catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }
