@@ -6,7 +6,7 @@ car rental service. A user can create an account, add a vehicle, and also remove
 vehicle from their account but, if a user tries adding another vehicle to their account if
 one is already added they will receive an error due to a one vehicle limit being implemented.
 
-# Source files: 
+# Source file descriptions: 
 
 RentalCompany.java - Java file that contains the main, also contains the methods to the gui.
 
