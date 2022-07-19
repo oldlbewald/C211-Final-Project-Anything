@@ -63,7 +63,7 @@ public class Vehicles {
 
     @Override
     public String toString() {
-        return "Car{" +
+        return 
                 "make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", isRented=" + isRented +
@@ -72,6 +72,6 @@ public class Vehicles {
 	
 	//Output Method
 		public void output() {
-			System.out.println("" + carPrice + "/" + type + "/" + make + "/" + model + "/" + year + "/" + color);
+			System.out.println("" + "/" + type + "/" + make + "/" + model + "/" + year + "/" + color);
 		}
 }
