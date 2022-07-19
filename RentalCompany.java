@@ -218,7 +218,7 @@ public class RentalCompany {
 			System.out.println("Enter your choice");
 			choice = scan.nextInt();
                         }
-                        scan.close();
+                        //scan.close();
                         System.out.println("Thanks for using Express Rental Service, have a great day!");
 		}
 
