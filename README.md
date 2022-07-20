@@ -11,7 +11,7 @@ RentalCompany.java - Java file that contains the main, also contains the methods
 
 newAcount.java - Java file that creates a new users account with a username and password from users input. Also ensures all input is formated properly before inserted to Accounts.txt file.
 
-Accounts.txt - This is a text file where the users will be added to when they a created, this includes the users username and password they input.
+Accounts.txt - This is a text file where the users will be added to when they a created, this includes the users username and password they add.
 
 Account.java - Java file that contains the methods to validate login validation.
 
