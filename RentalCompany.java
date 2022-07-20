@@ -1,7 +1,9 @@
 
-
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,10 +26,10 @@ public class RentalCompany {
         System.out.println("Possible actions:");
         System.out.println("0 - Quit the program");
         System.out.println("1 - log in");
-        System.out.println("2 - Create an account"); 
+        System.out.println("2 - Create an account");
     }
 
-    public static void performAction(newAcount NA, Account A, int choice) throws FileNotFoundException {
+    public static void performAction(newAccount NA, Account A, int choice) throws FileNotFoundException, IOException {
         // Strings used for logging in
         String username;
         String password;
@@ -56,7 +58,7 @@ public class RentalCompany {
 
                 // if login is successful display next actions to choose from
                 if (A.verifyLogin(username, password, "Accounts.txt") != false) {
-       
+
                     System.out.println("You have successfully logged in");
                     mainMenu();
 
@@ -74,7 +76,7 @@ public class RentalCompany {
                 }
                 System.out.println("Your username will be " + newusername);
 
-                // newAcount.checkUsernameDupe("Accounts.txt", newusername);
+                // newAccount.checkUsernameDupe("Accounts.txt", newusername);
                 System.out.println("Enter the password you want to use for this account:");
                 newpassword = scan.nextLine();
                 while (newpassword == null || newpassword.isEmpty() || newpassword.isBlank() || newpassword.contains(" ")) {
@@ -96,7 +98,119 @@ public class RentalCompany {
         // Create new account case
     }
 
-    public static void mainMenu() {
+    public static void rentalMenu() throws IOException {
+        System.out.println("Please confirm your username:");
+        String username;
+        username = scan.nextLine();
+
+        if (Account.verifyLoginName(username, "Rentals.txt") == true) {
+            System.out.println("Only one vehicle per customer is allowed. Please return current vehicle to rent another one.");
+            mainMenu();
+        } else {
+
+            //display  Available Cars
+            System.out.println(" Available Cars :");
+            for (int i = 0; i < availableCars.size(); i++) {
+                System.out.println("(" + (i + 1) + ") " + availableCars.get(i).getName());
+            }
+
+            // read user Input
+            int userSelection = UI.readInt("Enter a number to select the car you'd like to rent", 1, 5);
+
+            if (userSelection <= availableCars.size()) {
+                //Inform the user of a successful rent
+                System.out.println(" Thank you! You are now renting  " + availableCars.get(userSelection - 1).getName());
+
+                try (FileWriter output = new FileWriter("Rentals.txt", true);
+                        BufferedWriter b = new BufferedWriter(output);
+                        PrintWriter p = new PrintWriter(b);) {
+
+                    p.println(username + " is renting " + availableCars.get(userSelection - 1).getName());
+                } catch (IOException ex) {
+                    Logger.getLogger(RentalCompany.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                //Updating the car Rental status
+                rentedCars.add(availableCars.get(userSelection - 1));
+                availableCars.remove(userSelection - 1);
+
+            } else {
+                System.out.println("Car selection invalid, please try again ");
+            }
+            mainMenu();
+        }
+    }
+
+    public static void returnMenu() throws FileNotFoundException, IOException {
+
+        if (rentedCars.isEmpty()) {
+            System.out.println("\n\nSorry, there are no available cars to rent.returning to the main menu…\n\n");
+            mainMenu();
+            return;
+        }
+        //display  Rented Cars
+        System.out.println(" Rented Cars :");
+        for (int i = 0; i < rentedCars.size(); i++) {
+
+            System.out.println("(" + (i + 1) + ") " + rentedCars.get(i).getName());
+        }
+        // read user Inout
+        int userSelection = UI.readInt("Enter a number to select the car you'd like to return", 1, 5);
+
+        try {
+
+            File inFile = new File("Rentals.txt");
+
+            //Construct the new file that will later be renamed to the original filename.
+            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+
+            try (BufferedReader br = new BufferedReader(new FileReader("Rentals.txt"));
+                    PrintWriter pw = new PrintWriter(new FileWriter(tempFile))) {
+
+                String line = null;
+
+                //Read from the original file and write to the new
+                //unless content matches data to be removed.
+                while ((line = br.readLine()) != null) {
+
+                    if (!line.trim().contains(rentedCars.get(userSelection - 1).getName())) {
+
+                        pw.println(line);
+                        pw.flush();
+                    }
+                }
+            }
+
+            //Delete the original file
+            if (!inFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+
+            //Rename the new file to the filename the original file had.
+            if (!tempFile.renameTo(inFile)) {
+                System.out.println("Could not rename file");
+            }
+
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+        }
+
+        if (userSelection <= rentedCars.size()) {
+            //Inform the user of a successful rent
+            System.out.println(" Thank you, you have returned   " + rentedCars.get(userSelection - 1).getName());
+
+            availableCars.add(rentedCars.get(userSelection - 1));
+            rentedCars.remove(userSelection - 1);
+
+        } else {
+            System.out.println("Car selection invalid, please try again ");
+
+        }
+        mainMenu();
+    }
+
+    public static void mainMenu() throws IOException {
         System.out.println("MAIN MENU");
         System.out.println(" Welcome to Java Car Rentals  :");
 
@@ -104,92 +218,21 @@ public class RentalCompany {
         System.out.println("1) Rent");
         System.out.println("2) Return ");
         System.out.println("3) Exit ");
-        int userSelection  = UI.readInt("Select an option ",1,3);
+        int userSelection = UI.readInt("Select an option ", 1, 3);
 
         switch (userSelection) {
-            case 1 -> rentalMenu();
-            case 2 -> returnMenu();
-            case 3 -> quit = true;
-                        
+            case 1 ->
+                rentalMenu();
+            case 2 ->
+                returnMenu();
+            case 3 ->
+                quit = true;
+
         }
 
     }
-    
-    public static void rentalMenu() {
 
-            //display  Available Cars
-            System.out.println(" Available Cars :");
-            for (int i = 0; i < availableCars.size() ; i++) {
-                System.out.println("(" + (i + 1) + ") " + availableCars.get(i).getName());
-            }
-
-        // read user Input
-           int  userSelection = UI.readInt("Enter a number to select the car you'd like to rent",1,5);
-
-
-            if (userSelection <= availableCars.size()) {
-        //Inform the user of a successful rent
-                System.out.println(" Thank you! You are now renting  " +availableCars.get(userSelection -1).getName());
-
-                try (FileWriter output = new FileWriter("Accounts.txt", true);
-				BufferedWriter b = new BufferedWriter(output);
-				PrintWriter p = new PrintWriter(b);) {
-
-			p.println(availableCars.get(userSelection -1).getName());
-		} catch (IOException ex) {
-                    Logger.getLogger(RentalCompany.class.getName()).log(Level.SEVERE, null, ex);
-                }
-		 
-                //Updating the car Rental status
-                rentedCars.add( availableCars.get(userSelection -1));
-                availableCars.remove(userSelection-1);
-
-            }
-        else {
-                System.out.println("Car selection invalid, please try again ");
-            }
-        mainMenu();
-    }
-    
-    
-    
-    public static void returnMenu() {
-        if (rentedCars.isEmpty()){
-            System.out.println("\n\nSorry, there are no available cars to rent.returning to the main menu…\n\n");
-            mainMenu();
-            return;
-        }
-        //display  Rented Cars
-        System.out.println(" Rented Cars :");
-        for (int i = 0; i < rentedCars.size() ; i++) {
-
-            System.out.println("(" + (i + 1) + ") "+ rentedCars.get(i).getName());
-        }
-
-        // read user Inout
-       int  userSelection = UI.readInt("Enter a number to select the car you'd like to return",1,3);
-
-        if (userSelection <= rentedCars.size()) {
-            //Inform the user of a successful rent
-            System.out.println(" Thank you, you have returned   " +rentedCars.get(userSelection -1).getName());
-            availableCars.add( rentedCars.get(userSelection -1));
-            rentedCars.remove(userSelection-1);
-
-        }
-        else {
-            System.out.println("Car selection invalid, please try again ");
-
-
-        }
-        mainMenu();
-        
-    }
-
-
-
-        
-    
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
 
         Vehicles v1 = new Vehicles("Car", "Ford", "Mustang", 2015, "Black");
         Vehicles v2 = new Vehicles("Truck", "Dodge", "Ram", 2017, "Blue");
@@ -202,25 +245,25 @@ public class RentalCompany {
         availableCars.add(v3);
         availableCars.add(v4);
         availableCars.add(v5);
-       int choice;
-	Scanner scan = new Scanner(System.in);
-	Account accounts = new Account();
-        newAcount newaccount = new newAcount();
+        int choice;
+        Scanner scan = new Scanner(System.in);
+        Account accounts = new Account();
+        newAccount newaccount = new newAccount();
 
-		while (!quit) {
-			printMainMenuOne();
-			System.out.println("Enter your choice");
-			choice = scan.nextInt();
-                        performAction(newaccount, accounts, choice);
-                        
-                        while (!start) {
-			mainMenu();
-			System.out.println("Enter your choice");
-			choice = scan.nextInt();
-                        }
-                        //scan.close();
-                        System.out.println("Thanks for using Express Rental Service, have a great day!");
-		}
+        while (!quit) {
+            printMainMenuOne();
+            System.out.println("Enter your choice");
+            choice = scan.nextInt();
+            performAction(newaccount, accounts, choice);
+
+            while (!start) {
+                mainMenu();
+                System.out.println("Enter your choice");
+
+            }
+            //scan.close();
+            System.out.println("Thanks for using Express Rental Service, have a great day!");
+        }
 
     }
 }
