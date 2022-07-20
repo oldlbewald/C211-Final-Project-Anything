@@ -1,56 +1,53 @@
 
 public class Vehicles {
-	String type;
-	String make;
-	String model;
-	int year;
-	String color;
-        private boolean isRented;       
 
-        
-	
-	//Default Constructor
-		public Vehicles() {
-			type = "";
-			make = "";
-			model = "";
-			year = 0;
-			color = "";
-			
-		}
+    String type;
+    String make;
+    String model;
+    int year;
+    String color;
+    private boolean isRented;
 
-	//Constructor
-		public Vehicles(String type, String make, String model, int year, String color) {
-			this.type = type;
-			this.make = make;
-			this.model = model;
-			this.year = year;
-			this.color = color;
-                        this.isRented = isRented;
-		}
-		
-	public static void outputArray(Vehicles[] cars) {
-            for (Vehicles car : cars) {
-                car.output();
-            }
-	}
+    //Default Constructor
+    public Vehicles() {
+        type = "";
+        make = "";
+        model = "";
+        year = 0;
+        color = "";
+
+    }
+
+    //Constructor
+    public Vehicles(String type, String make, String model, int year, String color) {
+        this.type = type;
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.color = color;
+        this.isRented = isRented;
+    }
+
+    public static void outputArray(Vehicles[] cars) {
+        for (Vehicles car : cars) {
+            car.output();
+        }
+    }
 
     Vehicles(String honda, String accord, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-        
-        
-       public String getMake() {
+
+    public String getMake() {
         return make;
     }
-
 
     public String getModel() {
         return model;
     }
 
     public String getName() {
-        return  make +" "+model;
+        return make + " " + model;
     }
 
     public boolean isRented() {
@@ -63,15 +60,14 @@ public class Vehicles {
 
     @Override
     public String toString() {
-        return 
-                "make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", isRented=" + isRented +
-                '}';
+        return "make='" + make + '\''
+                + ", model='" + model + '\''
+                + ", isRented=" + isRented
+                + '}';
     }
-	
-	//Output Method
-		public void output() {
-			System.out.println("" + "/" + type + "/" + make + "/" + model + "/" + year + "/" + color);
-		}
+
+    //Output Method
+    public void output() {
+        System.out.println("" + "/" + type + "/" + make + "/" + model + "/" + year + "/" + color);
+    }
 }
