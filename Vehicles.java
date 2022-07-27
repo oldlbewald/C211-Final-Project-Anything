@@ -1,3 +1,7 @@
+package RentalCompany;
+
+import java.util.*;
+import java.io.*;
 
 public class Vehicles {
 
@@ -34,9 +38,6 @@ public class Vehicles {
         }
     }
 
-    Vehicles(String honda, String accord, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public String getMake() {
         return make;
@@ -58,16 +59,54 @@ public class Vehicles {
         isRented = rented;
     }
 
-    @Override
-    public String toString() {
-        return "make='" + make + '\''
-                + ", model='" + model + '\''
-                + ", isRented=" + isRented
-                + '}';
-    }
+
 
     //Output Method
     public void output() {
         System.out.println("" + "/" + type + "/" + make + "/" + model + "/" + year + "/" + color);
+    }
+	
+	public static void writeFile(String filename, ArrayList<Vehicles> newVehicles) {
+        try (FileWriter output = new FileWriter(filename);
+			BufferedWriter b = new BufferedWriter(output);
+			PrintWriter p = new PrintWriter(b);) {
+				
+			for (int i = 0; i < newVehicles.size(); i++) {
+				Vehicles newVehicle = newVehicles.get(i);
+				p.println(newVehicle.type + "," + newVehicle.make + "," + newVehicle.model
+							+ "," + newVehicle.year + "," + newVehicle.color);
+			}				
+			
+        } catch (IOException e) {
+        }
+    }
+	
+	public static ArrayList<Vehicles> loadVehicles(String fileName) {
+		
+        ArrayList<Vehicles> availableCars = new ArrayList<>();
+        
+        try {
+            try (Scanner x = new Scanner(new File(fileName))) {
+                x.useDelimiter("[ \n]");
+                while (x.hasNext()) {
+                    String line = x.nextLine();
+					
+					//System.out.println(line);
+					
+					String[] details = line.split(",");
+
+					String type = details[0], make = details[1], model = details[2], color = details[4];
+					int year = Integer.parseInt(details[3]);
+					
+					Vehicles vehicle = new Vehicles(type, make, model, year, color);
+
+                    availableCars.add(vehicle);
+                }
+            }
+        } catch (FileNotFoundException e) {
+
+        }
+		
+        return availableCars;
     }
 }
