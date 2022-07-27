@@ -5,7 +5,7 @@
 //Tyler Delgadillo
 //Lachlan Ewald
 //
-//Accounts.java by Darian Collier
+//Account.java by Darian Collier
 //
 
 public class Account {
