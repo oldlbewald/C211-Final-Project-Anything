@@ -40,26 +40,7 @@ public class Account {
 		this.rentedVehicleID = rentedVehicleID;
 	}
 	
-    // Method to check if the user-name entered is blank, null or has spaces
-    public static void checkUsername(String username) {
-        if (username != null && !username.isEmpty() && !username.isBlank()) {
-        } else {
-            System.out.println("The username you entered was empty or not valid. Type it again:");
-            username = scan.nextLine();
-            checkUsername(username);
-        }
-    }
-
-    // Method to check if the password entered is blank, null or has spaces
-    public static void checkPassword(String password) {
-        if (password != null && !password.isEmpty() && !password.isBlank()) {
-        } else {
-            System.out.println("The password you entered was empty or not valid. Type it again:");
-            password = scan.nextLine();
-            checkPassword(password);
-        }
-    }
-
+	
     public boolean verifyLogin(String username, String password, String fileName) {
         boolean found = false;
         String searchUsername = "";
@@ -122,30 +103,6 @@ public class Account {
 
     }
 
-    // Method to check if the new user-name entered is blank, null or has spaces
-    public static void checkUsername(String newusername) {
-        if (newusername != null && !newusername.isEmpty() && !newusername.isBlank() && !newusername.contains(" ")) {
-            System.out.println("Your username for this account will be " + newusername);
-        } else {
-            System.out.println(
-                    "The username you entered was empty, had spaces or was not a valid username. Type it again:");
-            newusername = scan.nextLine();
-            checkUsername(newusername);
-        }
-    }
-
-    public String checkUsername1(String newusername) {
-        System.out.println("Let's get you signed up");
-        System.out.println("Enter the username you want to use for this account:");
-
-        while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ")) {
-            System.out.println("Username was either blank or had spaces. Enter it again:");
-            newusername = scan.nextLine();
-        }
-        // System.out.println("your username will be " + newusername);
-        return newusername;
-    }
-
    // Method to verify if a new account user-name matches that of a present user
 	public boolean verifynewUsername(String newusername, String fileName) {
 		boolean found = false;
@@ -170,19 +127,6 @@ public class Account {
 		}
 		return found;
 	}
-
-    // Method to check if the new password entered is blank, null or has spaces
-    public static void checkPassword(String newpassword) {
-        if (newpassword != null && !newpassword.isEmpty() && !newpassword.isBlank() && !newpassword.contains(" ")) {
-            System.out.println("Your password for this account will be " + newpassword);
-            System.out.println("Thanks for creating an account with Express Rental Service! Try logging in now.");
-        } else {
-            System.out.println(
-                    "The password you entered was empty, had spaces or was not a valid password. Type it again:");
-            newpassword = scan.nextLine();
-            checkPassword(newpassword);
-        }
-    }
 
     // Method to create a new account for a user, storing their inputed user-name
     // and password into the Accounts.txt file on a new line
