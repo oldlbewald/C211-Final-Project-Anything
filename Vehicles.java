@@ -1,13 +1,14 @@
 //Info C211 Summer 2022
 //Group project - Vehicle Rental Company
-//Team: 
-//Darian Collier 
+//Team:
+//Darian Collier
 //Tyler Delgadillo
 //Lachlan Ewald
 //
 //Vehicles.java by Lachlan Ewald
 //
 package RentalCompany;
+
 import java.util.*;
 import java.io.*;
 
@@ -68,45 +69,44 @@ public class Vehicles {
     }
 
 
-
     //Output Method
     public void output() {
         System.out.println("" + "/" + type + "/" + make + "/" + model + "/" + year + "/" + color);
     }
-	
-	public static void writeFile(String filename, ArrayList<Vehicles> newVehicles) {
+
+    public static void writeFile(String filename, ArrayList<Vehicles> newVehicles) {
         try (FileWriter output = new FileWriter(filename);
-			BufferedWriter b = new BufferedWriter(output);
-			PrintWriter p = new PrintWriter(b);) {
-				
-			for (int i = 0; i < newVehicles.size(); i++) {
-				Vehicles newVehicle = newVehicles.get(i);
-				p.println(newVehicle.type + "," + newVehicle.make + "," + newVehicle.model
-							+ "," + newVehicle.year + "," + newVehicle.color);
-			}				
-			
+             BufferedWriter b = new BufferedWriter(output);
+             PrintWriter p = new PrintWriter(b);) {
+
+            for (int i = 0; i < newVehicles.size(); i++) {
+                Vehicles newVehicle = newVehicles.get(i);
+                p.println(newVehicle.type + "," + newVehicle.make + "," + newVehicle.model
+                        + "," + newVehicle.year + "," + newVehicle.color);
+            }
+
         } catch (IOException e) {
         }
     }
-	
-	public static ArrayList<Vehicles> loadVehicles(String fileName) {
-		
+
+    public static ArrayList<Vehicles> loadVehicles(String fileName) {
+
         ArrayList<Vehicles> availableCars = new ArrayList<>();
-        
+
         try {
             try (Scanner x = new Scanner(new File(fileName))) {
                 x.useDelimiter("[ \n]");
                 while (x.hasNext()) {
                     String line = x.nextLine();
-					
-					//System.out.println(line);
-					
-					String[] details = line.split(",");
 
-					String type = details[0], make = details[1], model = details[2], color = details[4];
-					int year = Integer.parseInt(details[3]);
-					
-					Vehicles vehicle = new Vehicles(type, make, model, year, color);
+                    //System.out.println(line);
+
+                    String[] details = line.split(",");
+
+                    String type = details[0], make = details[1], model = details[2], color = details[4];
+                    int year = Integer.parseInt(details[3]);
+
+                    Vehicles vehicle = new Vehicles(type, make, model, year, color);
 
                     availableCars.add(vehicle);
                 }
@@ -114,7 +114,7 @@ public class Vehicles {
         } catch (FileNotFoundException e) {
 
         }
-		
+
         return availableCars;
     }
 }
