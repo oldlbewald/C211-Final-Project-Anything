@@ -1,3 +1,12 @@
+//Info C211 Summer 2022
+//Group project - Vehicle Rental Company
+//Team: 
+//Darian Collier 
+//Tyler Delgadillo
+//Lachlan Ewald
+//
+//RentalCompany.java by Tyler Delgadillo
+//
 package RentalCompany;
 import RentalCompany.Account.newAccount;
 import java.io.BufferedReader;
