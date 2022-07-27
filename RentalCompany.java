@@ -80,17 +80,19 @@ public class RentalCompany {
                 System.out.println("Let's get you signed up");
                 System.out.println("Enter the username you want to use for this account:");
                 newusername = scan.nextLine();
-                while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ")) {
-                    System.out.println("Username was either blank or had spaces. Enter it again:");
+                while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ") 
+		      || NA.verifynewUsername(newusername, "Accounts.txt") != false) {
+                    System.out.println("Username was either already in use, blank or had spaces. Enter it again:");
                     newusername = scan.nextLine();
                 }
                 System.out.println("Your username will be " + newusername);
 
-               // newAccount.checkUsernameDupe("Accounts.txt", newusername);
+            
                 System.out.println("Enter the password you want to use for this account:");
                 newpassword = scan.nextLine();
-                while (newpassword == null || newpassword.isEmpty() || newpassword.isBlank() || newpassword.contains(" ")) {
-                    System.out.println("Password was either blank or had spaces. Enter it again:");
+                while (newpassword == null || newpassword.isEmpty() || newpassword.isBlank() || newpassword.contains(" ")
+		      || newpassword.equals(newusername)) {
+                    System.out.println("Password was either the same as your username, blank or had spaces. Enter it again:");
                     newpassword = scan.nextLine();
                 }
                 System.out.println("Your password will be " + newpassword);
