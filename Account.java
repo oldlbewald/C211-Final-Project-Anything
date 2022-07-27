@@ -146,30 +146,30 @@ public class Account {
         return newusername;
     }
 
-    public static void checkUsernameDupe(String newusername, String fileName) {
-        boolean found = false;
-        String searchUsername = "";
+   // Method to verify if a new account user-name matches that of a present user
+	public boolean verifynewUsername(String newusername, String fileName) {
+		boolean found = false;
+		String searchUsername = "";
+		String searchPassword = "";
 
-        try {
-            try (Scanner x = new Scanner(new File(fileName))) {
-                x.useDelimiter("[ \n]");
+		try {
+			try (Scanner x = new Scanner(new File(fileName))) {
+				x.useDelimiter("[ \n]");
+				while (x.hasNext() && !found) {
+					searchUsername = x.next();
+					searchPassword = x.next();
 
-                while (x.hasNext() && !found) {
-                    searchUsername = x.next();
-
-                    if (searchUsername.trim().equals(newusername.trim())) {
-                        found = true;
-                        System.out.println(found);
-                    }
-                }
-            }
-            found = false;
-        } catch (Exception e) {
-            System.out.println("username already created");
-            
-        }
-
-    }
+					if (searchUsername.trim().equals(newusername.trim())) {
+						return true;
+					}
+				}
+				// return false;
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Error...");
+		}
+		return found;
+	}
 
     // Method to check if the new password entered is blank, null or has spaces
     public static void checkPassword(String newpassword) {
