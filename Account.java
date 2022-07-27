@@ -1,264 +1,199 @@
-package RentalCompany;
-import RentalCompany.Account.newAccount;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//Info C211 Summer 2022
+//Group project - Vehicle Rental Company
+//Team: 
+//Darian Collier 
+//Tyler Delgadillo
+//Lachlan Ewald
+//
+//Accounts.java by Darian Collier
+//
 
-public class RentalCompany {
+public class Account {
+
+    String username;
+    String password;
+	int rentedVehicleID;
 
     static Scanner scan = new Scanner(System.in);
-    static boolean quit = false;
-    static boolean start = true;
 
-    static ArrayList<Vehicles> availableCars = new ArrayList<>();
-    static ArrayList<Vehicles> rentedCars = new ArrayList<>();
-
-    // Interface function for main menu
-    public static void printMainMenuOne() {
-        System.out.println("Possible actions:");
-        System.out.println("0 - Quit the program");
-        System.out.println("1 - log in");
-        System.out.println("2 - Create an account");
+    // Constructor
+    public Account() {
+        username = "";
+        password = "";
+		rentedVehicleID = -1;
     }
 
-    public static void performAction(newAccount NA, Account A, int choice) throws FileNotFoundException, IOException {
-        // Strings used for logging in
-        String username;
-        String password;
-
-        // Strings used when creating a new account
-        String newusername;
-        String newpassword;
-
-        switch (choice) {
-            case 0 ->
-                quit = true;
-            case 1 -> {
-                System.out.println("Enter your username:");
-                username = scan.nextLine();
-                while (username == null || username.isEmpty() || username.isBlank() || username.contains(" ")) {
-                    System.out.println("Username was either blank or had spaces. Enter it again:");
-                    username = scan.nextLine();
-                }
-
-                System.out.println("Enter your password:");
-                password = scan.nextLine();
-                while (password == null || password.isEmpty() || password.isBlank() || password.contains(" ")) {
-                    System.out.println("Password was either blank or had spaces. Enter it again:");
-                    password = scan.nextLine();
-                }
-
-                // if login is successful display next actions to choose from
-                if (A.verifyLogin(username, password, "Accounts.txt") != false) {
-
-                    System.out.println("You have successfully logged in");
-                    mainMenu();
-
-                } else {
-                    System.out.println("Try Logging in again.");
-                }
-            }
-            case 2 -> {
-                System.out.println("Let's get you signed up");
-                System.out.println("Enter the username you want to use for this account:");
-                newusername = scan.nextLine();
-                while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ")) {
-                    System.out.println("Username was either blank or had spaces. Enter it again:");
-                    newusername = scan.nextLine();
-                }
-                System.out.println("Your username will be " + newusername);
-
-               // newAccount.checkUsernameDupe("Accounts.txt", newusername);
-                System.out.println("Enter the password you want to use for this account:");
-                newpassword = scan.nextLine();
-                while (newpassword == null || newpassword.isEmpty() || newpassword.isBlank() || newpassword.contains(" ")) {
-                    System.out.println("Password was either blank or had spaces. Enter it again:");
-                    newpassword = scan.nextLine();
-                }
-                System.out.println("Your password will be " + newpassword);
-
-                NA.writeFile("Accounts.txt", newusername, newpassword);
-                System.out.println("Your Account was successfully created. Try logging in now.");
-            }
-
-            default ->
-                System.out.println("Unknown option, try again.");
-
-        }
-        // Quit application case
-        // Login case
-        // Create new account case
+    // Constructor
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
+		this.rentedVehicleID = -1;
     }
-
-    public static void rentalMenu() throws IOException {
-        System.out.println("Please confirm your username:");
-        String username;
-        username = scan.nextLine();
-
-        if (Account.verifyLoginName(username, "Rentals.txt") == true) {
-            System.out.println("Only one vehicle per customer is allowed. Please return current vehicle to rent another one.");
-            mainMenu();
+	
+	int getRentedVehicleID()
+	{
+		return this.rentedVehicleID;
+	}
+	
+	void setRentedVehicleID(int rentedVehicleID)
+	{
+		this.rentedVehicleID = rentedVehicleID;
+	}
+	
+    // Method to check if the user-name entered is blank, null or has spaces
+    public static void checkUsername(String username) {
+        if (username != null && !username.isEmpty() && !username.isBlank()) {
         } else {
-
-            //display  Available Cars
-            System.out.println(" Available Cars :");
-
-            for (int i = 0; i < availableCars.size(); i++) {
-                System.out.println("(" + (i + 1) + ") " + availableCars.get(i).getName());
-            }
-
-            // read user Input
-            int userSelection = UI.readInt("Enter a number to select the car you'd like to rent");
-
-            if (userSelection <= availableCars.size()) {
-                //Inform the user of a successful rent
-                System.out.println(" Thank you! You are now renting  " + availableCars.get(userSelection - 1).getName());
-
-                try (FileWriter output = new FileWriter("Rentals.txt", true);
-                        BufferedWriter b = new BufferedWriter(output);
-                        PrintWriter p = new PrintWriter(b);) {
-
-                    p.println(username + " is renting " + availableCars.get(userSelection - 1).getName());
-                } catch (IOException ex) {
-                    Logger.getLogger(RentalCompany.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                //Updating the car Rental status
-                rentedCars.add(availableCars.get(userSelection - 1));
-                availableCars.remove(userSelection - 1);
-
-            } else {
-                System.out.println("Car selection invalid, please try again ");
-            }
-            mainMenu();
+            System.out.println("The username you entered was empty or not valid. Type it again:");
+            username = scan.nextLine();
+            checkUsername(username);
         }
     }
 
-    public static void returnMenu() throws FileNotFoundException, IOException {
-
-        if (rentedCars.isEmpty()) {
-            System.out.println("\n\nSorry, there are no available cars to rent.returning to the main menu…\n\n");
-            mainMenu();
-            return;
+    // Method to check if the password entered is blank, null or has spaces
+    public static void checkPassword(String password) {
+        if (password != null && !password.isEmpty() && !password.isBlank()) {
+        } else {
+            System.out.println("The password you entered was empty or not valid. Type it again:");
+            password = scan.nextLine();
+            checkPassword(password);
         }
-        //display  Rented Cars
-        System.out.println(" Rented Cars :");
-        for (int i = 0; i < rentedCars.size(); i++) {
+    }
 
-            System.out.println("(" + (i + 1) + ") " + rentedCars.get(i).getName());
-        }
-        // read user Inout
-        int userSelection = UI.readInt("Enter a number to select the car you'd like to return");
+    public boolean verifyLogin(String username, String password, String fileName) {
+        boolean found = false;
+        String searchUsername = "";
+        String searchPassword = "";
 
         try {
+            try (Scanner x = new Scanner(new File(fileName))) {
+                x.useDelimiter("[ \n]");
+                while (x.hasNext() && !found) {
+                    searchUsername = x.next();
+                    searchPassword = x.next();
 
-            File inFile = new File("Rentals.txt");
+                    if (searchUsername.trim().equals(username.trim()) && searchPassword.trim().equals(password.trim())) {
+                        return true;
+                    }
+                }
+                // return false;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Username or password was inncorect.");
+        }
+        return found;
+    }
 
-            //Construct the new file that will later be renamed to the original filename.
-            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+    public static boolean verifyLoginName(String username, String fileName) {
+        boolean found = false;
+        String searchUsername = "";
 
-            try (BufferedReader br = new BufferedReader(new FileReader("Rentals.txt"));
-                    PrintWriter pw = new PrintWriter(new FileWriter(tempFile))) {
+        try {
+            try (Scanner x = new Scanner(new File(fileName))) {
+                x.useDelimiter("[ \n]");
+                while (x.hasNext() && !found) {
+                    searchUsername = x.next();
 
-                String line = null;
+                    if (searchUsername.trim().equals(username.trim())) {
+                        return true;
+                    }
+                }
+                // return false;
+            }
+        } catch (FileNotFoundException e) {
 
-                //Read from the original file and write to the new
-                //unless content matches data to be removed.
-                while ((line = br.readLine()) != null) {
+        }
+        return found;
+    }
 
-                    if (!line.trim().contains(rentedCars.get(userSelection - 1).getName())) {
+    public static class newAccount {
+        
+        static Scanner scan = new Scanner(System.in);
+        private String newusername;
+        private String newpassword;
 
-                        pw.println(line);
-                        pw.flush();
+        public newAccount() {
+                String newusername = "";
+                String newpassword = "";
+        }
+        public newAccount(String newusername, String newpassword) {
+        this.newusername = newusername;
+        this.newpassword = newpassword;
+
+    }
+
+    // Method to check if the new user-name entered is blank, null or has spaces
+    public static void checkUsername(String newusername) {
+        if (newusername != null && !newusername.isEmpty() && !newusername.isBlank() && !newusername.contains(" ")) {
+            System.out.println("Your username for this account will be " + newusername);
+        } else {
+            System.out.println(
+                    "The username you entered was empty, had spaces or was not a valid username. Type it again:");
+            newusername = scan.nextLine();
+            checkUsername(newusername);
+        }
+    }
+
+    public String checkUsername1(String newusername) {
+        System.out.println("Let's get you signed up");
+        System.out.println("Enter the username you want to use for this account:");
+
+        while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ")) {
+            System.out.println("Username was either blank or had spaces. Enter it again:");
+            newusername = scan.nextLine();
+        }
+        // System.out.println("your username will be " + newusername);
+        return newusername;
+    }
+
+    public static void checkUsernameDupe(String newusername, String fileName) {
+        boolean found = false;
+        String searchUsername = "";
+
+        try {
+            try (Scanner x = new Scanner(new File(fileName))) {
+                x.useDelimiter("[ \n]");
+
+                while (x.hasNext() && !found) {
+                    searchUsername = x.next();
+
+                    if (searchUsername.trim().equals(newusername.trim())) {
+                        found = true;
+                        System.out.println(found);
                     }
                 }
             }
-
-            //Delete the original file
-            if (!inFile.delete()) {
-                System.out.println("Could not delete file");
-                return;
-            }
-
-            //Rename the new file to the filename the original file had.
-            if (!tempFile.renameTo(inFile)) {
-                System.out.println("Could not rename file");
-            }
-
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
+            found = false;
+        } catch (Exception e) {
+            System.out.println("username already created");
+            
         }
 
-        if (userSelection <= rentedCars.size()) {
-            //Inform the user of a successful rent
-            System.out.println(" Thank you, you have returned   " + rentedCars.get(userSelection - 1).getName());
+    }
 
-            availableCars.add(rentedCars.get(userSelection - 1));
-            rentedCars.remove(userSelection - 1);
-
+    // Method to check if the new password entered is blank, null or has spaces
+    public static void checkPassword(String newpassword) {
+        if (newpassword != null && !newpassword.isEmpty() && !newpassword.isBlank() && !newpassword.contains(" ")) {
+            System.out.println("Your password for this account will be " + newpassword);
+            System.out.println("Thanks for creating an account with Express Rental Service! Try logging in now.");
         } else {
-            System.out.println("Car selection invalid, please try again ");
-
+            System.out.println(
+                    "The password you entered was empty, had spaces or was not a valid password. Type it again:");
+            newpassword = scan.nextLine();
+            checkPassword(newpassword);
         }
-        mainMenu();
     }
 
-    public static void mainMenu() throws IOException {
-        System.out.println("MAIN MENU");
-        System.out.println(" Welcome to Java Car Rentals  :");
+    // Method to create a new account for a user, storing their inputed user-name
+    // and password into the Accounts.txt file on a new line
+    public void writeFile(String filename, String newusername, String newpassword) {
+        try (FileWriter output = new FileWriter("Accounts.txt", true);
+                BufferedWriter b = new BufferedWriter(output);
+                PrintWriter p = new PrintWriter(b);) {
 
-        System.out.println("Would you like to...");
-        System.out.println("1) Rent");
-        System.out.println("2) Return ");
-        System.out.println("3) Exit ");
-        int userSelection = UI.readInt("Select an option ");
-
-        switch (userSelection) {
-            case 1 ->
-                rentalMenu();
-            case 2 ->
-                returnMenu();
-            case 3 ->
-                quit = true;
-
+            p.println(newusername + " " + newpassword);
+        } catch (IOException e) {
         }
-
     }
-
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-		
-	availableCars = Vehicles.loadVehicles("Vehicles.txt");
-
-        int choice;
-        Scanner scan = new Scanner(System.in);
-        Account accounts = new Account();
-        newAccount newaccount = new newAccount();
-
-        while (!quit) {
-            printMainMenuOne();
-            System.out.println("Enter your choice");
-            choice = scan.nextInt();
-            performAction(newaccount, accounts, choice);
-
-            while (!start) {
-                mainMenu();
-                System.out.println("Enter your choice");
-
-            }
-            //scan.close();
-            System.out.println("Thanks for using Express Rental Service, have a great day!");
-        }
-		
-		Vehicles.writeFile("Vehicles.txt", availableCars);
-
+    }     
     }
-}
