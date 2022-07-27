@@ -1,14 +1,16 @@
 //Info C211 Summer 2022
 //Group project - Vehicle Rental Company
-//Team: 
-//Darian Collier 
+//Team:
+//Darian Collier
 //Tyler Delgadillo
 //Lachlan Ewald
 //
 //RentalCompany.java by Tyler Delgadillo
 //
 package RentalCompany;
+
 import RentalCompany.Account.newAccount;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -40,7 +42,6 @@ public class RentalCompany {
     }
 
     /**
-     *
      * @param NA
      * @param A
      * @param choice
@@ -57,8 +58,7 @@ public class RentalCompany {
         String newpassword;
 
         switch (choice) {
-            case 0 ->
-                quit = true;
+            case 0 -> quit = true;
             case 1 -> {
                 System.out.println("Enter your username:");
                 username = scan.nextLine();
@@ -88,18 +88,18 @@ public class RentalCompany {
                 System.out.println("Let's get you signed up");
                 System.out.println("Enter the username you want to use for this account:");
                 newusername = scan.nextLine();
-                while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ") 
-		      || A.verifynewUsername(newusername, "Accounts.txt") != false) {
+                while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ")
+                        || A.verifynewUsername(newusername, "Accounts.txt") != false) {
                     System.out.println("Username was either already in use, blank or had spaces. Enter it again:");
                     newusername = scan.nextLine();
                 }
                 System.out.println("Your username will be " + newusername);
 
-            
+
                 System.out.println("Enter the password you want to use for this account:");
                 newpassword = scan.nextLine();
                 while (newpassword == null || newpassword.isEmpty() || newpassword.isBlank() || newpassword.contains(" ")
-		      || newpassword.equals(newusername)) {
+                        || newpassword.equals(newusername)) {
                     System.out.println("Password was either the same as your username, blank or had spaces. Enter it again:");
                     newpassword = scan.nextLine();
                 }
@@ -109,8 +109,7 @@ public class RentalCompany {
                 System.out.println("Your Account was successfully created. Try logging in now.");
             }
 
-            default ->
-                System.out.println("Unknown option, try again.");
+            default -> System.out.println("Unknown option, try again.");
 
         }
         // Quit application case
@@ -128,7 +127,7 @@ public class RentalCompany {
             mainMenu();
         } else {
 
-           //display  Available Cars
+            //display  Available Cars
             System.out.println(" Available Cars :");
 
             for (int i = 0; i < availableCars.size(); i++) {
@@ -143,8 +142,8 @@ public class RentalCompany {
                 System.out.println(" Thank you! You are now renting  " + availableCars.get(userSelection - 1).getName());
 
                 try (FileWriter output = new FileWriter("Rentals.txt", true);
-                        BufferedWriter b = new BufferedWriter(output);
-                        PrintWriter p = new PrintWriter(b);) {
+                     BufferedWriter b = new BufferedWriter(output);
+                     PrintWriter p = new PrintWriter(b);) {
 
                     p.println(username + " is renting " + availableCars.get(userSelection - 1).getName());
                 } catch (IOException ex) {
@@ -186,7 +185,7 @@ public class RentalCompany {
             File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
 
             try (BufferedReader br = new BufferedReader(new FileReader("Rentals.txt"));
-                    PrintWriter pw = new PrintWriter(new FileWriter(tempFile))) {
+                 PrintWriter pw = new PrintWriter(new FileWriter(tempFile))) {
 
                 String line = null;
 
@@ -242,20 +241,17 @@ public class RentalCompany {
         int userSelection = UI.readInt("Select an option ");
 
         switch (userSelection) {
-            case 1 ->
-                rentalMenu();
-            case 2 ->
-                returnMenu();
-            case 3 ->
-                quit = true;
+            case 1 -> rentalMenu();
+            case 2 -> returnMenu();
+            case 3 -> quit = true;
 
         }
 
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-		
-	availableCars = Vehicles.loadVehicles("Vehicles.txt");
+
+        availableCars = Vehicles.loadVehicles("Vehicles.txt");
 
         int choice;
         Scanner scan = new Scanner(System.in);
@@ -276,8 +272,8 @@ public class RentalCompany {
             //scan.close();
             System.out.println("Thanks for using Express Rental Service, have a great day!");
         }
-		
-		Vehicles.writeFile("Vehicles.txt", availableCars);
+
+        Vehicles.writeFile("Vehicles.txt", availableCars);
 
     }
 }
