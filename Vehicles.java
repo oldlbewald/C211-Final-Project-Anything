@@ -7,9 +7,7 @@
 //
 //Vehicles.java by Lachlan Ewald
 //
-
 package RentalCompany;
-
 import java.util.*;
 import java.io.*;
 
