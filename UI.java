@@ -1,3 +1,4 @@
+
 package RentalCompany;
 
 import java.util.InputMismatchException;
@@ -13,11 +14,11 @@ public class UI {
             System.out.println(question);
             int userInput = scanner.nextInt();
             scanner.nextLine();
-         //   if (userInput >= min && userInput <= max) {
-                return userInput;
-            
-         //   System.out.println("Number outside the valid range , please try again ...");
-         //   return readInt(question, min, max);
+            //   if (userInput >= min && userInput <= max) {
+            return userInput;
+
+            //   System.out.println("Number outside the valid range , please try again ...");
+            //   return readInt(question, min, max);
 
         } catch (InputMismatchException exception) {
             System.out.println("Invalid Data Type ");
