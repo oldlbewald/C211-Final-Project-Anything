@@ -1,0 +1,4 @@
+SUV,Chrysler,Town & Country,2025,White
+Car,Tesla,S,2022,Red
+SUV,Jeep,Grand Cherokee,2021,Grey
+Car,Ford,Mustang,2015,Black
