@@ -39,6 +39,14 @@ public class RentalCompany {
         System.out.println("2 - Create an account");
     }
 
+    /**
+     *
+     * @param NA
+     * @param A
+     * @param choice
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static void performAction(newAccount NA, Account A, int choice) throws FileNotFoundException, IOException {
         // Strings used for logging in
         String username;
@@ -120,7 +128,7 @@ public class RentalCompany {
             mainMenu();
         } else {
 
-            //display  Available Cars
+           //display  Available Cars
             System.out.println(" Available Cars :");
 
             for (int i = 0; i < availableCars.size(); i++) {
