@@ -81,7 +81,7 @@ public class RentalCompany {
                 System.out.println("Enter the username you want to use for this account:");
                 newusername = scan.nextLine();
                 while (newusername == null || newusername.isEmpty() || newusername.isBlank() || newusername.contains(" ") 
-		      || NA.verifynewUsername(newusername, "Accounts.txt") != false) {
+		      || A.verifynewUsername(newusername, "Accounts.txt") != false) {
                     System.out.println("Username was either already in use, blank or had spaces. Enter it again:");
                     newusername = scan.nextLine();
                 }
