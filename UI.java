@@ -1,3 +1,4 @@
+package RentalCompany;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -6,27 +7,27 @@ public class UI {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public static int readInt(String question, int min, int max) {
+    public static int readInt(String question) {
 
         try {
             System.out.println(question);
             int userInput = scanner.nextInt();
             scanner.nextLine();
-            if (userInput >= min && userInput <= max) {
+         //   if (userInput >= min && userInput <= max) {
                 return userInput;
-            }
-            System.out.println("Number outside the valid range , please try again ...");
-            return readInt(question, min, max);
+            
+         //   System.out.println("Number outside the valid range , please try again ...");
+         //   return readInt(question, min, max);
 
         } catch (InputMismatchException exception) {
             System.out.println("Invalid Data Type ");
             scanner.nextLine();
-            return readInt(question, min, max);
+            return readInt(question);
 
         } catch (Exception exception) {
             scanner.nextLine();
             System.out.println(exception.getClass());
-            return readInt(question, min, max);
+            return readInt(question);
 
         }
     }
