@@ -96,7 +96,26 @@ public class Account {
         return found;
     }
 
-    boolean verifynewUsername(String newusername, String fileName) {
+
+
+    public static class newAccount {
+
+        static Scanner scan = new Scanner(System.in);
+        private String newusername;
+        private String newpassword;
+
+        public newAccount() {
+            String newusername = "";
+            String newpassword = "";
+        }
+
+        public newAccount(String newusername, String newpassword) {
+            this.newusername = newusername;
+            this.newpassword = newpassword;
+
+        }
+        
+         boolean verifynewUsername(String newusername, String fileName) {
         boolean found = false;
         String searchUsername = "";
         String searchPassword = "";
@@ -119,24 +138,6 @@ public class Account {
         }
         return found;
     }
-
-
-    public static class newAccount {
-
-        static Scanner scan = new Scanner(System.in);
-        private String newusername;
-        private String newpassword;
-
-        public newAccount() {
-            String newusername = "";
-            String newpassword = "";
-        }
-
-        public newAccount(String newusername, String newpassword) {
-            this.newusername = newusername;
-            this.newpassword = newpassword;
-
-        }
 
 
         // Method to create a new account for a user, storing their inputed user-name
