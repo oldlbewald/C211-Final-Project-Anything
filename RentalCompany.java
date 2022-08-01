@@ -153,6 +153,13 @@ public class RentalCompany {
                 //Updating the car Rental status
                 rentedCars.add(availableCars.get(userSelection - 1));
                 availableCars.remove(userSelection - 1);
+                
+                else if (userSelection == isRented()) {
+                    System.out.println (" The car you are trying to rent is currently unavailable " );
+                    mainMenu();
+                    
+                }
+                    
 
             } else {
                 System.out.println("Car selection invalid, please try again ");
