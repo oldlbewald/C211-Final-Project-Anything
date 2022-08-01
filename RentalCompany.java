@@ -154,11 +154,11 @@ public class RentalCompany {
                 rentedCars.add(availableCars.get(userSelection - 1));
                 availableCars.remove(userSelection - 1);
                 
-                else if (userSelection == isRented()) {
-                    System.out.println (" The car you are trying to rent is currently unavailable " );
-                    mainMenu();
+                //else if (userSelection == isRented()) {
+                    //System.out.println (" The car you are trying to rent is currently unavailable " );
+                    //mainMenu();
                     
-                }
+                //}
                     
 
             } else {
