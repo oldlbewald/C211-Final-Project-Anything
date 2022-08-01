@@ -13,7 +13,7 @@ Account.java - Java file that contains the methods to validate login information
 
 Vehicles.java - Java file that creates the vehicle objects & methods to add vehicles and remove vehicles to users accounts.
 
-UI.java - Java file that that tests the user input for errors
+UI.java - Java file that that tests the user input for errors.
 
 Accounts.txt - This is a text file where the users will be added to when they a created, this includes the users username and password they add.
 
