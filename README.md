@@ -9,14 +9,20 @@ one has already been added they will receive an error due to a one vehicle limit
 
 RentalCompany.java - Java file that contains the main, also contains the methods to the gui.
 
-newAcount.java - Java file that creates a new users account with a username and password from users input. Also ensures all input is formated properly before inserted to Accounts.txt file.
-
-Accounts.txt - This is a text file where the users will be added to when they a created, this includes the users username and password they add.
-
 Account.java - Java file that contains the methods to validate login information.
 
 Vehicles.java - Java file that creates the vehicle objects & methods to add vehicles and remove vehicles to users accounts.
 
+UI.java - Java file that that tests the user input for errors
+
+Accounts.txt - This is a text file where the users will be added to when they a created, this includes the users username and password they add.
+
+Rentals.txt - This file stores the vehicles that have been rented.
+
+
 # Interface Functionality
 
 When a user starts the application, they can choose from three options in the GUI, number 0 being to exit the program, two being to log in, and lastly three being able to create a new account. If a user logs in successfully they enter into their account options which range from logging off, adding a vehicle, and removing a vehicle from their account.
+
+
+
